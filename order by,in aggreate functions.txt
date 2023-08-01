@@ -1,0 +1,179 @@
+nter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.33 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database loki;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use loki;
+Database changed
+mysql> create table siva
+    -> (sl_no int(3),
+    -> name char(20),
+    -> subject char(20),
+    -> branch char(20));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> desc siva;
++---------+----------+------+-----+---------+-------+
+| Field   | Type     | Null | Key | Default | Extra |
++---------+----------+------+-----+---------+-------+
+| sl_no   | int      | YES  |     | NULL    |       |
+| name    | char(20) | YES  |     | NULL    |       |
+| subject | char(20) | YES  |     | NULL    |       |
+| branch  | char(20) | YES  |     | NULL    |       |
++---------+----------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into siva values(123,'lucky','chemistry','nellore'),(345,'kumar','physics','goa'),(678,'ram','telugu','ong
+ole');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from siva;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from siva where sl_no=345;
++-------+-------+---------+--------+
+| sl_no | name  | subject | branch |
++-------+-------+---------+--------+
+|   345 | kumar | physics | goa    |
++-------+-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select*from siva where branch='goa';
++-------+-------+---------+--------+
+| sl_no | name  | subject | branch |
++-------+-------+---------+--------+
+|   345 | kumar | physics | goa    |
++-------+-------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select*from siva
+    -> where subject IN('chemistry','physics');
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
++-------+-------+-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select*from siva
+    -> where subject BETWEEN 'chemistry' AND 'telugu';
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.02 sec)
+
+mysql> select*from siva
+    -> where suject NOT BETWEEN 'chemistry' AND 'telugu';
+ERROR 1054 (42S22): Unknown column 'suject' in 'where clause'
+mysql>
+mysql> where subject NOT BETWEEN 'chemistry' AND 'telugu';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where subject NOT BETWEEN 'chemistry' AND 'telugu'' at line 1
+mysql> select*from siva
+    -> where subject BETWEEN 'chemistry' AND 'telugu';
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from siva
+    -> where suject NOT BETWEEN 'chemistry' AND 'telugu';
+ERROR 1054 (42S22): Unknown column 'suject' in 'where clause'
+mysql> select*from siva
+    -> where subject NOT BETWEEN 'chemistry' AND 'telugu';
+Empty set (0.00 sec)
+
+mysql> select*from siva
+    -> where subject NOT BETWEEN 'physics' AND 'telugu';'
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
++-------+-------+-----------+---------+
+1 row in set (0.00 sec)
+
+    '> ;
+    '>
+    '> select*from siva
+    '> where subject NOT BETWEEN 'chemistry' AND 'telugu';
+    '> ;
+    '> ^C
+mysql> select count(subject) from siva;
++----------------+
+| count(subject) |
++----------------+
+|              3 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select max(sl_no) from siva;
++------------+
+| max(sl_no) |
++------------+
+|        678 |
++------------+
+1 row in set (0.03 sec)
+
+mysql> select*from siva;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from siva
+    -> order by subject;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.02 sec)
+
+mysql> select*from siva
+    -> order by sl_no;
++-------+-------+-----------+---------+
+| sl_no | name  | subject   | branch  |
++-------+-------+-----------+---------+
+|   123 | lucky | chemistry | nellore |
+|   345 | kumar | physics   | goa     |
+|   678 | ram   | telugu    | ongole  |
++-------+-------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from siva
+    -> order by sl_no des;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'des' at line 2
+mysql>

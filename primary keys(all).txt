@@ -1,0 +1,507 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.33 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use gb;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| city   | varchar(40) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+--------+---------+--------+
+| id   | name   | city    | salary |
++------+--------+---------+--------+
+|   11 | lokesh | chennai |   1234 |
+|   12 | mani   | goa     |   6541 |
+|   13 | sai    | ongole  |   9874 |
+|   18 | loks   | chennai |    234 |
+|   14 | venky  | araku   |    874 |
+|   63 | venky  | chirala |  65743 |
+|   45 | janu   | chirala |  65743 |
+|   36 | swetha | chirala |  65743 |
++------+--------+---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> atter table student add primary key where id=11;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'atter table student add primary key where id=11' at line 1
+mysql> create table cbn(id int primary key,name varchar(23),city varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc cbn;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(23) | YES  |     | NULL    |       |
+| city  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cbnvalues(12,'lokesh','cse'),(63,'sandeep','cec');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '12,'lokesh','cse'),(63,'sandeep','cec')' at line 1
+mysql> insert into cbn values(12,'lokesh','cse'),(63,'sandeep','cec');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from cbn;
++----+---------+------+
+| id | name    | city |
++----+---------+------+
+| 12 | lokesh  | cse  |
+| 63 | sandeep | cec  |
++----+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> insert into cbn values(12,'guptha','mech');
+ERROR 1062 (23000): Duplicate entry '12' for key 'cbn.PRIMARY'
+mysql> insert into cbn (id,name)values(85,'gopi');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++----+---------+------+
+| id | name    | city |
++----+---------+------+
+| 12 | lokesh  | cse  |
+| 63 | sandeep | cec  |
+| 85 | gopi    | NULL |
++----+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cbn (name,city)values('gopi','mec');
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> insert into cbn values(103);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into cbn(id) values(103);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++-----+---------+------+
+| id  | name    | city |
++-----+---------+------+
+|  12 | lokesh  | cse  |
+|  63 | sandeep | cec  |
+|  85 | gopi    | NULL |
+| 103 | NULL    | NULL |
++-----+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> alter table add pec float notnull from cbn;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add pec float notnull from cbn' at line 1
+mysql> alter table add pec float from cbn;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add pec float from cbn' at line 1
+mysql> alter table cbn add pec float notnull ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'notnull' at line 1
+mysql> alter table cbn add pec float;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table cbn add pec float notnull;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'notnull' at line 1
+mysql> drop table cbn;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from cbn;
+ERROR 1146 (42S02): Table 'gb.cbn' doesn't exist
+mysql> desc cbn;
+ERROR 1146 (42S02): Table 'gb.cbn' doesn't exist
+mysql> show tables;
++--------------+
+| Tables_in_gb |
++--------------+
+| student      |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> create table cbn(id int primary key,name varchar(30),branch varchar(30),pec float notnull);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'notnull)' at line 1
+mysql> create table cbn(id int primary key,name varchar(30),branch varchar(30),pec float not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc cbn;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| branch | varchar(30) | YES  |     | NULL    |       |
+| pec    | float       | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into cbn values(1,'sandeep','cse',98);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++----+---------+--------+-----+
+| id | name    | branch | pec |
++----+---------+--------+-----+
+|  1 | sandeep | cse    |  98 |
++----+---------+--------+-----+
+1 row in set (0.00 sec)
+
+mysql> insert into cbn values(12,'gopi','cec',198);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++----+---------+--------+-----+
+| id | name    | branch | pec |
++----+---------+--------+-----+
+|  1 | sandeep | cse    |  98 |
+| 12 | gopi    | cec    | 198 |
++----+---------+--------+-----+
+2 rows in set (0.00 sec)
+
+mysql> insert into cbn(id,name)values(10,'lokesh');
+ERROR 1364 (HY000): Field 'pec' doesn't have a default value
+mysql> insert into cbn(id,name,pec)values(10,'lokesh',36);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++----+---------+--------+-----+
+| id | name    | branch | pec |
++----+---------+--------+-----+
+|  1 | sandeep | cse    |  98 |
+| 10 | lokesh  | NULL   |  36 |
+| 12 | gopi    | cec    | 198 |
++----+---------+--------+-----+
+3 rows in set (0.00 sec)
+
+mysql> insert into cbn(id,pec)values(125);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into cbn(id,pec)values(125,53);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++-----+---------+--------+-----+
+| id  | name    | branch | pec |
++-----+---------+--------+-----+
+|   1 | sandeep | cse    |  98 |
+|  10 | lokesh  | NULL   |  36 |
+|  12 | gopi    | cec    | 198 |
+| 125 | NULL    | NULL   |  53 |
++-----+---------+--------+-----+
+4 rows in set (0.00 sec)
+
+mysql> insert into cbn(pec)values(63);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql>
+mysql> drop table cbn;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table cbn(id int primary key,name varchar(30),age int check age>20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'age>20)' at line 1
+mysql> create table cbn(id int primary key,name varchar(30),age int check (age>20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc cbn;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> mysql> insert into cbn values(12,'lokesh',46),(63,'sandeep',32);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> insert into cbn values(12,'lokesh',46),(63,'sandeep',32)' at line 1
+mysql> mysql> insert into cbn values(12,'lokesh',46),(63,'sandeep',32);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> insert into cbn values(12,'lokesh',46),(63,'sandeep',32)' at line 1
+mysql> insert into cbn values(12,'sai',63);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into cbn values(32,'loki',45);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++----+------+------+
+| id | name | age  |
++----+------+------+
+| 12 | sai  |   63 |
+| 32 | loki |   45 |
++----+------+------+
+2 rows in set (0.00 sec)
+
+mysql> insert into cbn values(20,'loki',13);
+ERROR 3819 (HY000): Check constraint 'cbn_chk_1' is violated.
+mysql> insert into cbn values(20,'loki',36);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from cbn;
++----+------+------+
+| id | name | age  |
++----+------+------+
+| 12 | sai  |   63 |
+| 20 | loki |   36 |
+| 32 | loki |   45 |
++----+------+------+
+3 rows in set (0.00 sec)
+
+mysql> drop table cbn;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> mysql> create table cbn(id int primary key,name varchar(30),college varchar(63) default'sse');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> create table cbn(id int primary key,name varchar(30),college varchar(63) ' at line 1
+mysql> create table cbn(id int primary key,name varchar(30),college varchar(20) default'sse');
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc cbn;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(30) | YES  |     | NULL    |       |
+| college | varchar(20) | YES  |     | sse     |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cbn values(20,'loki');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into cbn values(10,'loki','gec');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from cbn;
++----+------+---------+
+| id | name | college |
++----+------+---------+
+| 10 | loki | gec     |
++----+------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into cbn(id,name,branch) values(10,'loki');
+ERROR 1054 (42S22): Unknown column 'branch' in 'field list'
+mysql> insert into cbn(id,name,) values(10,'loki');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values(10,'loki')' at line 1
+mysql> insert into cbn(id,name) values(10,'loki');
+ERROR 1062 (23000): Duplicate entry '10' for key 'cbn.PRIMARY'
+mysql> insert into cbn(id,name) values(111,'loki');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from cbn;
++-----+------+---------+
+| id  | name | college |
++-----+------+---------+
+|  10 | loki | gec     |
+| 111 | loki | sse     |
++-----+------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into cbn(id,name) values(21,'raji');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from cbn;
++-----+------+---------+
+| id  | name | college |
++-----+------+---------+
+|  10 | loki | gec     |
+|  21 | raji | sse     |
+| 111 | loki | sse     |
++-----+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cbn values(60,'swetha','bec');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from cbn;
++-----+--------+---------+
+| id  | name   | college |
++-----+--------+---------+
+|  10 | loki   | gec     |
+|  21 | raji   | sse     |
+|  60 | swetha | bec     |
+| 111 | loki   | sse     |
++-----+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> drop table cbn;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table cbn(id int primary key,name varchar(30),phnno int unique);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc cbn;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| phnno | int         | YES  | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into cbn values(12,'gopal,123),(75,'kumar',759);
+    '>
+    '> ^C
+mysql> insert into cbn values(12,'gopal,123),(75,'kumar',759);
+    '> ^C
+mysql> insrt into cbn values(26.'john',74592);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insrt into cbn values(26.'john',74592)' at line 1
+mysql> insrt into cbn values(26,'john',74592);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'insrt into cbn values(26,'john',74592)' at line 1
+mysql> insert into cbn values(26,'john',74592);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into cbn values(41,'pondu',96325);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from cbn;
++----+-------+-------+
+| id | name  | phnno |
++----+-------+-------+
+| 26 | john  | 74592 |
+| 41 | pondu | 96325 |
++----+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into cbn(name) values('pondu');
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> insert into cbn values(61,'pondu',96325);
+ERROR 1062 (23000): Duplicate entry '96325' for key 'cbn.phnno'
+mysql> insert into cbn values(61,'vasanth');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into cbn(id,name) values(61,'vasanth');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from cbn;
++----+---------+-------+
+| id | name    | phnno |
++----+---------+-------+
+| 26 | john    | 74592 |
+| 41 | pondu   | 96325 |
+| 61 | vasanth |  NULL |
++----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table log(in int primary key,name varchar(90));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in int primary key,name varchar(90))' at line 1
+mysql> create table log(id int primary key,name varchar(90));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc log;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(90) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table msl(id int primary key,name varchar(32),classid int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc msl;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | int         | NO   | PRI | NULL    |       |
+| name    | varchar(32) | YES  |     | NULL    |       |
+| classid | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table msl;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table msl(id int primary key,name varchar(36),classid int foreign key references log(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key references log(id))' at line 1
+mysql> create table msl(id int primary key,name varchar(36),classid int foreign key reference log(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key reference log(id))' at line 1
+mysql> create table msl(id int primary key,name varchar(36),classid int foreign key reference log(classid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key reference log(classid))' at line 1
+mysql> create table msl(sid int primary key,name varchar(36),classid int foreign key references log(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key references log(id))' at line 1
+mysql> create table msl(sid int primary key,name varchar(36),classid int foreign key references log(sid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key references log(sid))' at line 1
+mysql> select * log;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'log' at line 1
+mysql> desc log;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(90) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table student(id int primary key,name varchar(89),city varchar(60),foreign key(city) references log(id));
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> create table ruler(id int primary key,name varchar(89),city varchar(60),foreign key(city) references log(id));
+ERROR 3780 (HY000): Referencing column 'city' and referenced column 'id' in foreign key constraint 'ruler_ibfk_1' are incompatible.
+mysql> create table ruler(id int primary key,name varchar(89),city varchar(60),foreign key(id) references log(id));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc ruler;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(89) | YES  |     | NULL    |       |
+| city  | varchar(60) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++--------------+
+| Tables_in_gb |
++--------------+
+| cbn          |
+| log          |
+| ruler        |
+| student      |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql> desc log;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(90) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc ruler;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(89) | YES  |     | NULL    |       |
+| city  | varchar(60) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop ruler;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ruler' at line 1
+mysql> drop table ruler;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table ruler(sid int primary key,name varchar(34),foreign key(sid) references log(id));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc ruler;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| sid   | int         | NO   | PRI | NULL    |       |
+| name  | varchar(34) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql>
